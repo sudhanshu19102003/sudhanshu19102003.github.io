@@ -21,7 +21,7 @@ export default function Nav() {
 
       {/* Mobile Hamburger Button */}
       <button
-        className="nav-hamburger ml-auto md:ml-0"
+        className="nav-hamburger"
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}
