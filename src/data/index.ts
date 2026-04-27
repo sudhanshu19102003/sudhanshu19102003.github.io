@@ -12,7 +12,7 @@ export const HERO = {
   desc: `I build end-to-end AI systems — from LLM agent frameworks and RAG pipelines
 to production backends and cloud infrastructure. I care about how systems
 think, not just how they run.`,
-  location: 'Mumbai, India — open to remote',
+  location: 'Bengaluru, India — open to remote',
   email: 'sudhanshu19102003@gmail.com',
 }
 
