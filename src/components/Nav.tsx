@@ -10,8 +10,6 @@ export default function Nav() {
 
   return (
     <nav>
-      <span className="nav-logo">SS ↗</span>
-
       {/* Desktop Navigation */}
       <ul className="nav-links">
         {NAV_LINKS.map(({ label, href }) => (
@@ -23,7 +21,7 @@ export default function Nav() {
 
       {/* Mobile Hamburger Button */}
       <button
-        className="nav-hamburger"
+        className="nav-hamburger ml-auto md:ml-0"
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}

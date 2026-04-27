@@ -50,7 +50,7 @@ export default function Hero() {
           </p>
           <div className="hero-cta">
             <a href={`mailto:${HERO.email}`} className="btn-primary">Get in touch</a>
-            <a href="#projects" className="btn-outline">View work</a>
+            <a href="#experience" className="btn-outline">View work</a>
           </div>
         </div>
         <div className="hero-location">{HERO.location}</div>
