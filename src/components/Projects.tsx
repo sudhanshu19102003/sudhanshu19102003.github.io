@@ -101,6 +101,55 @@ function FeaturedPreview({ activeIdx, activeProject }: FeaturedPreviewProps) {
   )
 }
 
+// Inline media for mobile — always visible, self-contained
+function CardMedia({ project }: { project: ProjectItem }) {
+  const [slide, setSlide] = useState(0)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (!project.images || project.images.length <= 1) return
+    const t = setInterval(() => setSlide(s => (s + 1) % project.images!.length), 3500)
+    return () => clearInterval(t)
+  }, [project.images])
+
+  if (!project.video && !project.images) return null
+
+  return (
+    <div className="card-media">
+      {project.video && (
+        <video
+          ref={videoRef}
+          src={project.video}
+          muted loop playsInline autoPlay
+          preload="auto"
+          className="card-media-video"
+        />
+      )}
+      {!project.video && project.images && project.images.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          loading="eager"
+          alt={`${project.name} preview`}
+          className={`card-media-img${i === slide ? ' card-media-img--active' : ''}`}
+        />
+      ))}
+      {!project.video && project.images && project.images.length > 1 && (
+        <div className="card-media-dots">
+          {project.images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSlide(i)}
+              className={`featured-dot${i === slide ? ' featured-dot--active' : ''}`}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function ProjectCard({
   p,
   isActive,
@@ -115,6 +164,9 @@ function ProjectCard({
       className={`project-card${p.muted ? ' project-card--muted' : ''}${isActive ? ' project-card--active' : ''}`}
       onMouseEnter={onHover}
     >
+      {/* Mobile-only inline media preview */}
+      {!p.muted && <CardMedia project={p} />}
+
       <div className="project-card-body">
         <div className={`project-num${p.muted ? ' project-num--muted' : ''}`}>{p.num}</div>
         <h3 className={`project-name${p.muted ? ' project-name--muted' : ''}`}>{p.name}</h3>
