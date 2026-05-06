@@ -64,7 +64,7 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     period: 'Jun 2025 — Present',
     company: 'jurisphere.ai',
-    role: 'Senior Software Engineer',
+    role: 'Software Developer',
     points: [
       'Built AI-powered admin dashboards for automated data visualization and exploration.',
       'Overhauled backend by replacing legacy APIs with secure, high-performance ORM-based services.',
