@@ -843,22 +843,28 @@ section {
   border: 1px solid var(--color-line);
 }
 
+/* When a grid row sits directly below the featured preview, merge the borders */
+.projects-grid--below-preview {
+  border-top: none;
+}
+
 .project-card {
   background: var(--color-bg);
-  padding: 1.5rem 1.25rem;
   transition: background 0.2s;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
 }
 
-@media (min-width: 640px) {
-  .project-card {
-    padding: 2rem 1.75rem;
-  }
-}
-
-.project-card:hover {
+.project-card:hover,
+.project-card--active {
   background: var(--color-bg-2);
+}
+
+.project-card--active::before {
+  transform: scaleX(1);
 }
 
 .project-card::before {
@@ -872,6 +878,7 @@ section {
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
+  z-index: 2;
 }
 
 .project-card:hover::before {
@@ -882,18 +889,212 @@ section {
   background: var(--color-bg-2);
 }
 
+/* Featured media preview (above grid) */
+.featured-preview {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-bottom: none;
+}
+
+@media (min-width: 640px) {
+  .featured-preview {
+    height: 440px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-preview {
+    height: 580px;
+  }
+}
+
+/* Each project's media layer — all stay in DOM for caching */
+.featured-media-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.featured-media-item--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.featured-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.featured-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.featured-img--active {
+  opacity: 1;
+}
+
+.featured-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featured-empty-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: rgba(245, 242, 236, 0.25);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+/* Gradient info bar at bottom of preview */
+.featured-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(to top, rgba(26,25,22,0.85) 0%, transparent 100%);
+}
+
+@media (min-width: 640px) {
+  .featured-info {
+    padding: 1rem 1.75rem;
+  }
+}
+
+.featured-num {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xs);
+  color: var(--color-accent-2);
+  letter-spacing: var(--tracking-wider);
+  margin-right: 0.6rem;
+}
+
+.featured-name {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: #F5F2EC;
+}
+
+@media (min-width: 640px) {
+  .featured-name {
+    font-size: 1.15rem;
+  }
+}
+
+.featured-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.featured-live {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink);
+  background: var(--color-accent-2);
+  text-decoration: none;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 0.4rem 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.featured-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  display: inline-block;
+  animation: livePulse 1.6s ease infinite;
+  flex-shrink: 0;
+}
+
+.featured-live:hover {
+  background: #b8944f;
+  transform: translateY(-1px);
+}
+
+.featured-gh {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(245, 242, 236, 0.5);
+  text-decoration: none;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.featured-gh:hover { color: #F5F2EC; }
+
+.featured-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.featured-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(245, 242, 236, 0.35);
+  border: 1px solid rgba(245, 242, 236, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.featured-dot--active {
+  background: #F5F2EC;
+}
+
+/* Card body (text content) */
+.project-card-body {
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+@media (min-width: 640px) {
+  .project-card-body {
+    padding: 2rem 1.75rem;
+  }
+}
+
 .project-num {
   font-family: var(--font-mono);
   font-size: var(--font-size-2xs);
   color: var(--color-accent-2);
   letter-spacing: var(--tracking-wider);
-  margin-bottom: 0.75rem;
-}
-
-@media (min-width: 640px) {
-  .project-num {
-    margin-bottom: 1rem;
-  }
+  margin-bottom: 0.5rem;
 }
 
 .project-num--muted {
@@ -924,6 +1125,7 @@ section {
   color: var(--color-ink-2);
   line-height: 1.6;
   margin-bottom: 1rem;
+  flex: 1;
 }
 
 @media (min-width: 640px) {
@@ -955,6 +1157,12 @@ section {
   letter-spacing: var(--tracking-wide);
 }
 
+.project-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
 .project-link {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -980,6 +1188,25 @@ section {
 
 .project-link::after {
   content: ' →';
+}
+
+.project-link--demo {
+  color: #F5F2EC;
+  background: var(--color-accent);
+  padding: 0 0.65rem;
+  height: 28px;
+  letter-spacing: var(--tracking-wide);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.project-link--demo::after {
+  content: ' →';
+}
+
+.project-link--demo:hover {
+  background: #1e3a2c;
+  color: #F5F2EC;
+  transform: translateY(-1px);
 }
 
 /* RESEARCH */
@@ -1331,6 +1558,11 @@ footer {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 
 @keyframes cellLightUp {

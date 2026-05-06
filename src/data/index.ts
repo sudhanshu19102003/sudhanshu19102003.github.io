@@ -92,59 +92,76 @@ export interface ProjectItem {
   name: string
   desc: string
   tags: string[]
-  link: string
-  linkLabel: string
+  github: string
+  streamlit?: string
+  video?: string
+  images?: string[]
   muted?: boolean
 }
 
 export const PROJECTS: ProjectItem[] = [
   {
     num: '001',
-    name: 'Book Assistant',
-    desc: 'An LLM-powered agent that retrieves book information via tools and delivers structured responses. Built with a LangChain state graph for dynamic data flow and vector DB for efficient storage.',
-    tags: ['LangChain','Claude API','Vector DB','Agents'],
-    link: 'https://github.com/sudhanshu19102003',
-    linkLabel: 'GitHub',
+    name: 'Steam Recommendations',
+    desc: 'A game recommendation system combining Collaborative Filtering (SVD) and Content-Based Filtering (FAISS) to suggest Steam games. Pulls live game details and artwork from the Steam API.',
+    tags: ['SVD','FAISS','Steam API','Streamlit'],
+    github: 'https://github.com/sudhanshu19102003/steam_recommendations_system',
+    streamlit: 'https://steam-recommendations.streamlit.app/',
+    video: 'https://github.com/user-attachments/assets/840a95d9-32c3-4e27-9cfb-c59d7ac935dc',
   },
   {
     num: '002',
-    name: 'Crypto Scraping API',
-    desc: 'A Django REST Framework API that scrapes live cryptocurrency data from multiple sources in parallel, using Celery for async task management and real-time progress tracking.',
-    tags: ['Django','Celery','Redis','Web Scraping'],
-    link: 'https://github.com/sudhanshu19102003',
-    linkLabel: 'GitHub',
+    name: 'Book Assistant',
+    desc: 'An LLM-powered agent that retrieves book information via tools and delivers structured responses. Built with a LangChain state graph for dynamic data flow and ChromaDB for efficient semantic search.',
+    tags: ['LangChain','Claude API','ChromaDB','Agents'],
+    github: 'https://github.com/sudhanshu19102003/Book_Assistant',
+    streamlit: 'https://book-assistant.streamlit.app/',
+    video: 'https://github.com/sudhanshu19102003/LLM_agent_books/assets/78022236/a001d579-1c09-4830-964b-e719b200782e',
   },
   {
     num: '003',
     name: 'X-Ray Anomaly Detector',
     desc: 'Trained InceptionNet on the MURA dataset for musculoskeletal X-ray abnormality classification. Deployed via Streamlit for accessible stakeholder use — with a live demo.',
     tags: ['InceptionNet','PyTorch','Streamlit','Computer Vision'],
-    link: 'https://github.com/sudhanshu19102003',
-    linkLabel: 'GitHub + Demo',
+    github: 'https://github.com/sudhanshu19102003/x-ray-analyzer-streamlit',
+    streamlit: 'https://x-ray-analyzer.streamlit.app/',
+    images: [
+      'https://github.com/user-attachments/assets/916a533f-2d11-4e46-bdc1-0d5b9bb8ee17',
+      'https://github.com/user-attachments/assets/d53fd941-955a-43d8-a54e-be59e304e828',
+    ],
   },
   {
     num: '004',
-    name: 'Shopping Assistant',
-    desc: 'A recommendation system using InceptionNet for product classification, wrapped in a Streamlit UI that makes it easy for stakeholders to explore and interact with.',
-    tags: ['InceptionNet','Streamlit','Classification'],
-    link: 'https://github.com/sudhanshu19102003',
-    linkLabel: 'GitHub',
+    name: 'ShopSense',
+    desc: 'A Chrome extension that scans e-commerce pages to detect fraudulent reviews and surfaces an AI-powered product chatbot — powered by Flask and Llama on the backend.',
+    tags: ['Chrome Extension','Flask','LLM','NLP'],
+    github: 'https://github.com/sudhanshu19102003/ShopSense',
+    video: 'https://github.com/sudhanshu19102003/ShopSense/assets/78022236/a9e6c507-26a2-4fcb-80c3-471ab9bc6481',
   },
   {
     num: '005',
+    name: 'Crypto Scraping API',
+    desc: 'A Django REST Framework API that scrapes live cryptocurrency data from multiple sources in parallel, using Celery for async task management and real-time progress tracking.',
+    tags: ['Django','Celery','Redis','Web Scraping'],
+    github: 'https://github.com/sudhanshu19102003/CoinMarketCap_scraper',
+    images: [
+      'https://github.com/sudhanshu19102003/CoinMarketCap_scraper/assets/78022236/d315835e-812b-4648-9148-33084d7745ef',
+      'https://github.com/sudhanshu19102003/CoinMarketCap_scraper/assets/78022236/7a5ea769-ece2-4d2c-be87-828f2471c6d1',
+    ],
+  },
+  {
+    num: '006',
     name: 'Business Analytics Assistant',
     desc: 'A system combining advanced data visualization techniques with SQL databases — demonstrating how LLMs can turn raw data queries into visual, interpretable insights.',
     tags: ['SQL','Data Viz','LLM'],
-    link: 'https://github.com/sudhanshu19102003',
-    linkLabel: 'GitHub',
+    github: 'https://github.com/sudhanshu19102003/Business_Analytics_Assistant',
   },
   {
     num: 'More',
     name: 'Always building',
     desc: "Every project here started with a question I couldn't find a good answer to. The next one will too.",
     tags: [],
-    link: 'https://github.com/sudhanshu19102003',
-    linkLabel: 'See all on GitHub',
+    github: 'https://github.com/sudhanshu19102003',
     muted: true,
   },
 ]
