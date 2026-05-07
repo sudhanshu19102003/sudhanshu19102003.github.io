@@ -17,17 +17,10 @@ think, not just how they run.`,
 }
 
 export const ABOUT_PARAGRAPHS = [
-  `I started building AI systems not because they were trendy, but because I wanted to understand
-   the full stack — from a raw model forward pass to the API that a lawyer in another country
-   actually uses. That curiosity is still what drives me.`,
-  `At <strong>Jurisphere</strong>, I work on LLM-based agent frameworks for legal professionals —
-   systems that have to be accurate, fast, and reliable. That means I think a lot about latency,
-   retrieval quality, and what it actually means for a model to "understand" a document.`,
-  `My IEEE paper on <strong>knowledge graph–enhanced RAG</strong> came from a frustration with
-   how poorly standard retrieval handles multi-document reasoning. I wanted to prove a better path existed.`,
-  `Outside of work: I like designing things from scratch. Whether it's a custom LangChain-like framework,
-   an async task queue for crypto scraping, or an X-ray classifier — I find the problems I enjoy most
-   are the ones where the solution shape isn't obvious yet.`,
+  `I started building AI systems to understand them end-to-end — from model internals to orchestration and tooling that extends model capability while addressing their limitations.`,
+  `That curiosity led to my <em>IEEE research on knowledge graph–enhanced RAG</em>, where I explored architectures for better multi-document reasoning beyond traditional retrieval pipelines.`,
+  `Today, at <a href="https://jurisphere.ai" target="_blank"><strong><u><em>Jurisphere</em></u></strong></a>, I build LLM systems for legal professionals, focusing on retrieval, latency, and agent design to improve reliability and reasoning across large document sets.`,
+  `Across all of this, I’m most drawn to building systems from first principles — especially problems where strong engineering matters as much as the model itself.`,
 ]
 
 export const SKILLS = [
