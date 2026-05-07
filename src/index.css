@@ -1347,6 +1347,33 @@ section {
   }
 }
 
+.research-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.research-link {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-2);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.research-link:hover {
+  opacity: 0.75;
+}
+
+.research-doi {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xs);
+  color: rgba(245, 242, 236, 0.4);
+  user-select: all;
+}
+
 .research-badge {
   background: rgba(245, 242, 236, 0.1);
   border: 1px solid rgba(245, 242, 236, 0.2);

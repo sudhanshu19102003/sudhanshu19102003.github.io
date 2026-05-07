@@ -1,7 +1,7 @@
 import { RESEARCH } from '../data'
 
 export default function Research() {
-  const { label, title, venue, desc, badge } = RESEARCH
+  const { label, title, venue, desc, badge, doi, url } = RESEARCH
   return (
     <section id="research">
       <div className="section-inner">
@@ -15,6 +15,17 @@ export default function Research() {
             <h3 className="research-title">{title}</h3>
             <div className="research-venue">{venue}</div>
             <p className="research-desc">{desc}</p>
+            <div className="research-links">
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="research-link"
+              >
+                View on IEEE Xplore ↗
+              </a>
+              <span className="research-doi">DOI: {doi}</span>
+            </div>
           </div>
           <div className="research-badge">
             <span className="research-badge-text">{badge.text}</span>

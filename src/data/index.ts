@@ -168,6 +168,8 @@ This paper proposes a system where a knowledge graph sits alongside a vector ind
 combining graph traversal with semantic retrieval for richer, more accurate cross-document reasoning.
 Outperforms traditional methods on multi-document and long-context benchmarks.`,
   badge: { text: 'IEEE', sub: 'Peer reviewed', year: '2025' },
+  doi: '10.1109/ICPCSN65854.2025.11035854',
+  url: 'https://ieeexplore.ieee.org/document/11035854',
 }
 
 export interface ContactLink {
