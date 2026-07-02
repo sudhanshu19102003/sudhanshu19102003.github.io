@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-const COLORS = ['#E0DDD6', '#A8C9B0', '#5A9E72', '#2A6B45', '#1A4229']
+const COLORS = ['#D8D4CC', '#6DB88A', '#4A9468', '#2A6B45', '#1A4229']
 
 type ContribDay = [string, number, number] // [date, level, count]
 
