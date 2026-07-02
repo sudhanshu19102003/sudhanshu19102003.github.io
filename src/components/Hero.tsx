@@ -44,27 +44,20 @@ export default function Hero() {
             <em>{HERO.name[1]}</em>
           </h1>
           <p className="hero-desc">{HERO.desc}</p>
+          <p className="hero-building-line">
+            {HERO.currentlyBuilding.text}{' '}
+            <a
+              href={HERO.currentlyBuilding.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-building-link"
+            >
+              {HERO.currentlyBuilding.linkText}
+            </a>
+          </p>
           <div className="hero-cta">
             <a href={`mailto:${HERO.email}`} className="btn-primary">Get in touch</a>
             <a href="#experience" className="btn-outline">View work</a>
-          </div>
-
-          <div className="hero-meta">
-            <div className="hero-building">
-              <span className="hero-building-label">{HERO.currentlyBuilding.label}</span>
-              <p className="hero-building-title">
-                {HERO.currentlyBuilding.text}{' '}
-                <a
-                  href={HERO.currentlyBuilding.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-building-link"
-                >
-                  {HERO.currentlyBuilding.linkText}
-                </a>
-              </p>
-            </div>
-            <p className="hero-location">{HERO.location}</p>
           </div>
         </div>
       </div>

@@ -7,16 +7,14 @@ export const NAV_LINKS = [
 ]
 
 export const HERO = {
-  tag: 'AI & Systems Engineer',
+  tag: 'AI & Software Engineer',
   name: ['Sudhanshu', 'Suryawanshi'] as [string, string],
   desc: 'Technology fascinates me most when it begins to think. I build the systems that make that possible.',
   currentlyBuilding: {
-    label: 'Currently building',
-    text: 'building legal intelligence systems with real impact at',
+    text: 'Currently building legal intelligence systems with real impact at',
     linkText: 'Jurisphere',
     href: 'https://jurisphere.ai',
   },
-  location: 'Bengaluru, India — open to remote',
   email: 'sudhanshu19102003@gmail.com',
 }
 
