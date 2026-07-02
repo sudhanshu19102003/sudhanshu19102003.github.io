@@ -30,23 +30,23 @@ export const ABOUT_PARAGRAPHS = [
 export const SKILLS = [
   {
     category: 'AI & ML',
-    tags: ['LLMs','LangChain','LlamaIndex','PEFT','RAG','PyTorch','TensorFlow','Transformers','MCP'],
+    tags: ['LangChain','LlamaIndex','PEFT','RAG','PyTorch','TensorFlow','Transformers','MCP'],
   },
   {
     category: 'Backend & Data',
-    tags: ['Python','FastAPI','SQL','Celery','Redis','REST'],
+    tags: ['Python','FastAPI','PostgreSQL','Celery','Redis'],
   },
   {
     category: 'Frontend',
-    tags: ['TypeScript','Next.js'],
+    tags: ['Next.js','React', 'Django'],
   },
   {
     category: 'Infrastructure',
-    tags: ['Kubernetes','Docker','Jenkins','GCP','AWS','CI/CD'],
+    tags: ['GitHub Actions','Kubernetes','Docker','Jenkins','GCP','AWS','Terraform','CI/CD'],
   },
   {
     category: 'Vision & OCR',
-    tags: ['OpenCV','Tesseract','InceptionNet'],
+    tags: ['OpenCV','Tesseract','PaddleOCR','InceptionNet'],
   },
 ]
 
