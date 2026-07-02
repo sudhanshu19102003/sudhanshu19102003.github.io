@@ -454,28 +454,6 @@ nav {
   }
 }
 
-.hero-stack {
-  @apply flex flex-wrap;
-  gap: 0.375rem;
-}
-
-.hero-stack-tag {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--color-ink-2);
-  background: var(--color-bg-2);
-  border: 1px solid var(--color-line);
-  padding: 0.3rem 0.55rem;
-  letter-spacing: 0.02em;
-}
-
-@media (min-width: 640px) {
-  .hero-stack-tag {
-    font-size: var(--font-size-sm);
-    padding: 0.3rem 0.65rem;
-  }
-}
-
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -64,11 +64,6 @@ export default function Hero() {
                 </a>
               </p>
             </div>
-            <div className="hero-stack">
-              {HERO.stack.map(tag => (
-                <span className="hero-stack-tag" key={tag}>{tag}</span>
-              ))}
-            </div>
             <p className="hero-location">{HERO.location}</p>
           </div>
         </div>

@@ -16,7 +16,6 @@ export const HERO = {
     linkText: 'Jurisphere',
     href: 'https://jurisphere.ai',
   },
-  stack: ['Python', 'LangChain', 'FastAPI', 'Kubernetes', 'RAG', 'PyTorch', 'GCP', 'TypeScript'],
   location: 'Bengaluru, India — open to remote',
   email: 'sudhanshu19102003@gmail.com',
 }
