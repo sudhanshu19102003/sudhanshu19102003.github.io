@@ -471,20 +471,20 @@ nav {
 .stat-card {
   background: rgba(245, 242, 236, 0.88);
   backdrop-filter: blur(4px);
-  padding: 0.875rem 0.75rem;
+  padding: 1.35rem 0.75rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   height: 100%;
-  min-height: 80px;
+  min-height: 96px;
 }
 
 @media (min-width: 640px) {
   .stat-card {
-    padding: 1rem 1.25rem;
-    min-height: 96px;
+    padding: 1.65rem 1.25rem;
+    min-height: 112px;
   }
 }
 
@@ -553,7 +553,7 @@ nav {
   background: rgba(245, 242, 236, 0.88);
   backdrop-filter: blur(4px);
   border: 1px solid var(--color-line);
-  padding: 1rem 0.75rem 0.875rem;
+  padding: 1.35rem 0.75rem;
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -563,7 +563,7 @@ nav {
 
 @media (min-width: 640px) {
   .heatmap-wrap {
-    padding: 1.25rem 1.25rem 1rem;
+    padding: 1.65rem 1.25rem;
     margin-bottom: 0;
   }
 }
@@ -604,6 +604,44 @@ nav {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.heatmap-activity {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink-3);
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.heatmap-activity-item {
+  white-space: nowrap;
+}
+
+.heatmap-activity-sep {
+  margin: 0 0.5rem;
+  color: var(--color-ink-3);
+  opacity: 0.5;
+}
+
+.heatmap-activity-value {
+  color: var(--color-ink-2);
+}
+
+.heatmap-activity-label {
+  color: var(--color-ink-3);
+  text-transform: lowercase;
+}
+
+@media (min-width: 640px) {
+  .heatmap-activity {
+    font-size: var(--font-size-xs);
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
 }
 
 .heatmap-svg-wrap svg {

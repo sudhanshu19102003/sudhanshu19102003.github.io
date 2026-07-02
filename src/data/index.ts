@@ -20,6 +20,8 @@ export const HERO = {
   email: 'sudhanshu19102003@gmail.com',
 }
 
+export const GITHUB_USERNAME = 'sudhanshu19102003'
+
 export const ABOUT_PARAGRAPHS = [
   `I started building AI systems to understand them end-to-end — from model internals to orchestration and tooling that extends model capability while addressing their limitations.`,
   `That curiosity led to my <em>IEEE research on knowledge graph–enhanced RAG</em>, where I explored architectures for better multi-document reasoning beyond traditional retrieval pipelines.`,

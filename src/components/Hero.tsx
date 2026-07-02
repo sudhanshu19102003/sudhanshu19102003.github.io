@@ -27,7 +27,7 @@ export default function Hero() {
 
   const STATS: Stat[] = [
     { value: '3+', label: 'Years building', highlight: true },
-    { value: contributions, label: 'GitHub contributions', sublabel: 'Last 12 months' },
+    { value: contributions, label: 'Contributions', sublabel: 'Last 12 months' },
     { value: 'IEEE ICPCSN', label: 'Publication', sublabel: '2025' },
     { value: 'Jurisphere', label: 'Software Developer', sublabel: 'Current' },
   ]

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
+import { GITHUB_USERNAME } from '../data'
 
 const COLORS = ['#D8D4CC', '#6DB88A', '#4A9468', '#2A6B45', '#1A4229']
+const GITHUB_HEADERS = { Accept: 'application/vnd.github+json' }
 
 type ContribDay = [string, number, number] // [date, level, count]
 
@@ -13,6 +15,20 @@ interface ApiDay {
 interface ApiResponse {
   total: Record<string, number>
   contributions: ApiDay[]
+}
+
+interface GitHubUser {
+  public_repos: number
+  created_at: string
+}
+
+interface GitHubRepo {
+  stargazers_count: number
+}
+
+interface PublicKpi {
+  value: string
+  label: string
 }
 
 function buildWeeks(contribs: ContribDay[]) {
@@ -30,12 +46,39 @@ function buildWeeks(contribs: ContribDay[]) {
   return weeks
 }
 
+async function fetchPublicKpis(username: string): Promise<PublicKpi[]> {
+  const [userRes, reposRes] = await Promise.all([
+    fetch(`https://api.github.com/users/${username}`, { headers: GITHUB_HEADERS }),
+    fetch(`https://api.github.com/users/${username}/repos?per_page=100`, { headers: GITHUB_HEADERS }),
+  ])
+  if (!userRes.ok || !reposRes.ok) throw new Error('github fetch failed')
+
+  const user = await userRes.json() as GitHubUser
+  const repos = await reposRes.json() as GitHubRepo[]
+  const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0)
+  const yearsOnGithub = Math.max(
+    1,
+    Math.floor((Date.now() - new Date(user.created_at).getTime()) / (365.25 * 24 * 60 * 60 * 1000)),
+  )
+
+  return [
+    { value: user.public_repos.toLocaleString(), label: 'public repos' },
+    { value: totalStars.toLocaleString(), label: 'stars' },
+    {
+      value: yearsOnGithub.toLocaleString(),
+      label: yearsOnGithub === 1 ? 'yr on GitHub' : 'yrs on GitHub',
+    },
+  ]
+}
+
 export default function GithubHeatmap() {
   const [contribs, setContribs] = useState<ContribDay[]>([])
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading')
+  const [kpis, setKpis] = useState<PublicKpi[]>([])
+  const [kpiStatus, setKpiStatus] = useState<'loading' | 'ok' | 'error'>('loading')
 
   useEffect(() => {
-    fetch('https://github-contributions-api.jogruber.de/v4/sudhanshu19102003?y=last')
+    fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`)
       .then(r => {
         if (!r.ok) throw new Error('fetch failed')
         return r.json() as Promise<ApiResponse>
@@ -46,6 +89,13 @@ export default function GithubHeatmap() {
         setStatus('ok')
       })
       .catch(() => setStatus('error'))
+  }, [])
+
+  useEffect(() => {
+    fetchPublicKpis(GITHUB_USERNAME)
+      .then(setKpis)
+      .then(() => setKpiStatus('ok'))
+      .catch(() => setKpiStatus('error'))
   }, [])
 
   const weeks = useMemo(() => buildWeeks(contribs), [contribs])
@@ -76,7 +126,7 @@ export default function GithubHeatmap() {
   return (
     <div className="heatmap-wrap">
       <div className="heatmap-header">
-        <span className="heatmap-label">GitHub contributions</span>
+        <span className="heatmap-label" style={{ fontSize: '12px' }}>GitHub contributions</span>
       </div>
       <div className="heatmap-svg-wrap">
         {status === 'loading' && (
@@ -86,13 +136,13 @@ export default function GithubHeatmap() {
           <div className="heatmap-status">—</div>
         )}
         {status === 'ok' && (
-          <svg 
-            viewBox={`0 0 ${W} ${H}`} 
-            style={{ 
-              display: 'block', 
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            style={{
+              display: 'block',
               width: '100%',
               height: 'auto',
-              maxHeight: '140px'
+              maxHeight: '140px',
             }}
             preserveAspectRatio="xMidYMid meet"
           >
@@ -135,6 +185,18 @@ export default function GithubHeatmap() {
           </svg>
         )}
       </div>
+      {kpiStatus !== 'error' && (
+        <p className="heatmap-activity">
+          {kpiStatus === 'loading' && 'Loading public stats…'}
+          {kpiStatus === 'ok' && kpis.map((kpi, i) => (
+            <span className="heatmap-activity-item" key={kpi.label}>
+              {i > 0 && <span className="heatmap-activity-sep" aria-hidden="true">·</span>}
+              <span className="heatmap-activity-value">{kpi.value}</span>{' '}
+              <span className="heatmap-activity-label">{kpi.label}</span>
+            </span>
+          ))}
+        </p>
+      )}
     </div>
   )
 }
