@@ -9,9 +9,14 @@ export const NAV_LINKS = [
 export const HERO = {
   tag: 'AI & Systems Engineer',
   name: ['Sudhanshu', 'Suryawanshi'] as [string, string],
-  desc: `I build end-to-end AI systems — from LLM agent frameworks and RAG pipelines
-to production backends and cloud infrastructure. I care about how systems
-think, not just how they run.`,
+  desc: 'Technology fascinates me most when it begins to think. I build the systems that make that possible.',
+  currentlyBuilding: {
+    label: 'Currently building',
+    text: 'building legal intelligence systems with real impact at',
+    linkText: 'Jurisphere',
+    href: 'https://jurisphere.ai',
+  },
+  stack: ['Python', 'LangChain', 'FastAPI', 'Kubernetes', 'RAG', 'PyTorch', 'GCP', 'TypeScript'],
   location: 'Bengaluru, India — open to remote',
   email: 'sudhanshu19102003@gmail.com',
 }

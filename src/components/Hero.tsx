@@ -28,7 +28,7 @@ export default function Hero() {
   const STATS: Stat[] = [
     { value: '3+', label: 'Years building', highlight: true },
     { value: contributions, label: 'GitHub contributions', sublabel: 'Last 12 months' },
-    { value: 'IEEE ICPCSN', label: ' Publication', sublabel: '2025' },
+    { value: 'IEEE ICPCSN', label: 'Publication', sublabel: '2025' },
     { value: 'Jurisphere', label: 'Software Developer', sublabel: 'Current' },
   ]
 
@@ -43,17 +43,35 @@ export default function Hero() {
             {HERO.name[0]}<br />
             <em>{HERO.name[1]}</em>
           </h1>
-          <p className="hero-desc">
-            I build end-to-end AI systems — from LLM agent frameworks and RAG pipelines
-            to production backends and cloud infrastructure. I care about how systems{' '}
-            <em>think</em>, not just how they run.
-          </p>
+          <p className="hero-desc">{HERO.desc}</p>
           <div className="hero-cta">
             <a href={`mailto:${HERO.email}`} className="btn-primary">Get in touch</a>
             <a href="#experience" className="btn-outline">View work</a>
           </div>
+
+          <div className="hero-meta">
+            <div className="hero-building">
+              <span className="hero-building-label">{HERO.currentlyBuilding.label}</span>
+              <p className="hero-building-title">
+                {HERO.currentlyBuilding.text}{' '}
+                <a
+                  href={HERO.currentlyBuilding.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-building-link"
+                >
+                  {HERO.currentlyBuilding.linkText}
+                </a>
+              </p>
+            </div>
+            <div className="hero-stack">
+              {HERO.stack.map(tag => (
+                <span className="hero-stack-tag" key={tag}>{tag}</span>
+              ))}
+            </div>
+            <p className="hero-location">{HERO.location}</p>
+          </div>
         </div>
-        <div className="hero-location">{HERO.location}</div>
       </div>
 
       {/* ── RIGHT: checker panel ── */}
