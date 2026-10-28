@@ -1,15 +1,7 @@
-import { Fragment, useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { PROJECTS, ProjectItem } from '../data'
 
-const COLS = 3
-const REAL_PROJECTS = PROJECTS.filter(p => !p.muted)
-const MUTED_PROJECT = PROJECTS.find(p => p.muted)!
-
-// Rows of COLS cards; the muted "More" card closes the last row
-const ALL_CARDS = [...REAL_PROJECTS, MUTED_PROJECT]
-const ROWS = Array.from({ length: Math.ceil(ALL_CARDS.length / COLS) }, (_, r) =>
-  ALL_CARDS.slice(r * COLS, (r + 1) * COLS)
-)
+const REAL_PROJECTS = PROJECTS
 
 function ProjectMediaItem({ project, isActive }: { project: ProjectItem; isActive: boolean }) {
   const [slide, setSlide] = useState(0)
@@ -73,159 +65,126 @@ function ProjectMediaItem({ project, isActive }: { project: ProjectItem; isActiv
   )
 }
 
-interface FeaturedPreviewProps {
-  activeIdx: number
-  activeProject: ProjectItem
-}
-
-function FeaturedPreview({ activeIdx, activeProject }: FeaturedPreviewProps) {
+function FeaturedPreview({ activeIdx }: { activeIdx: number }) {
   return (
     <div className="featured-preview">
       {REAL_PROJECTS.map((project, i) => (
         <ProjectMediaItem key={project.num} project={project} isActive={i === activeIdx} />
       ))}
-      <div className="featured-info">
-        <div>
-          <span className="featured-num">{activeProject.num}</span>
-          <span className="featured-name">{activeProject.name}</span>
-        </div>
-        <div className="featured-actions">
-          {activeProject.streamlit && (
-            <a href={activeProject.streamlit} target="_blank" rel="noreferrer" className="featured-live">
-              Try it
-            </a>
-          )}
-          <a href={activeProject.github} target="_blank" rel="noreferrer" className="featured-gh">
-            GitHub →
-          </a>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// Inline media for mobile — always visible, self-contained
-function CardMedia({ project }: { project: ProjectItem }) {
-  const [slide, setSlide] = useState(0)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (!project.images || project.images.length <= 1) return
-    const t = setInterval(() => setSlide(s => (s + 1) % project.images!.length), 3500)
-    return () => clearInterval(t)
-  }, [project.images])
-
-  if (!project.video && !project.images) return null
-
-  return (
-    <div className="card-media">
-      {project.video && (
-        <video
-          ref={videoRef}
-          src={project.video}
-          muted loop playsInline autoPlay
-          preload="auto"
-          className="card-media-video"
-        />
-      )}
-      {!project.video && project.images && project.images.map((src, i) => (
-        <img
-          key={i}
-          src={src}
-          loading="eager"
-          alt={`${project.name} preview`}
-          className={`card-media-img${i === slide ? ' card-media-img--active' : ''}`}
-        />
-      ))}
-      {!project.video && project.images && project.images.length > 1 && (
-        <div className="card-media-dots">
-          {project.images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setSlide(i)}
-              className={`featured-dot${i === slide ? ' featured-dot--active' : ''}`}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function ProjectCard({
-  p,
-  isActive,
-  onHover,
-}: {
-  p: ProjectItem
-  isActive: boolean
-  onHover: () => void
-}) {
-  return (
-    <div
-      className={`project-card${p.muted ? ' project-card--muted' : ''}${isActive ? ' project-card--active' : ''}`}
-      onMouseEnter={onHover}
-    >
-      {/* Mobile-only inline media preview */}
-      {!p.muted && <CardMedia project={p} />}
-
-      <div className="project-card-body">
-        <div className={`project-num${p.muted ? ' project-num--muted' : ''}`}>{p.num}</div>
-        <h3 className={`project-name${p.muted ? ' project-name--muted' : ''}`}>{p.name}</h3>
-        <p className="project-desc">{p.desc}</p>
-        {p.tags.length > 0 && (
-          <div className="project-tags">
-            {p.tags.map(tag => <span key={tag} className="project-tag">{tag}</span>)}
-          </div>
-        )}
-        <div className="project-links">
-          <a href={p.github} className="project-link" target="_blank" rel="noreferrer">
-            {p.muted ? 'See all on GitHub' : 'GitHub'}
-          </a>
-          {p.streamlit && (
-            <a href={p.streamlit} className="project-link project-link--demo" target="_blank" rel="noreferrer">
-              Live Demo
-            </a>
-          )}
-        </div>
-      </div>
     </div>
   )
 }
 
 export default function Projects() {
   const [activeIdx, setActiveIdx] = useState(0)
+  const [touched, setTouched] = useState(false)
+  const listRef = useRef<HTMLDivElement>(null)
+  const pinRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const [inView, setInView] = useState(false)
   const activeProject = REAL_PROJECTS[activeIdx] ?? REAL_PROJECTS[0]
-  const activeRow = Math.floor(activeIdx / COLS)
+  const count = REAL_PROJECTS.length
 
-  const previewProps = { activeIdx, activeProject }
+  const step = (dir: 1 | -1) => setActiveIdx(i => (i + dir + count) % count)
+
+  // Keep the active card visible inside the scrolling list
+  useEffect(() => {
+    const list = listRef.current
+    const card = list?.querySelector<HTMLElement>(`[data-project="${activeProject.num}"]`)
+    if (!list || !card) return
+    if (card.offsetTop < list.scrollTop || card.offsetTop + card.offsetHeight > list.scrollTop + list.clientHeight) {
+      list.scrollTo({ top: card.offsetTop - 8, behavior: 'smooth' })
+    }
+  }, [activeProject.num])
+
+  // Autoplay only runs once the section is actually on screen
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.4 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  // While the section is pinned on desktop, scrolling steps through the projects
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    let last = -1
+    const onScroll = () => {
+      const pin = pinRef.current
+      if (!pin || !desktop.matches) return
+      const rect = pin.getBoundingClientRect()
+      const travel = rect.height - (window.innerHeight - 60)
+      if (travel <= 0 || rect.top > 60 || rect.bottom < window.innerHeight) return
+      const idx = Math.min(count - 1, Math.max(0, Math.floor((-(rect.top - 60) / travel) * count)))
+      if (idx !== last) {
+        last = idx
+        setActiveIdx(idx)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [count])
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); step(1) }
+    if (e.key === 'ArrowUp') { e.preventDefault(); step(-1) }
+  }
 
   return (
-    <section id="projects">
+    <div className="projects-pin" ref={pinRef} style={{ ['--steps' as string]: count }}>
+    <section id="projects" ref={sectionRef}>
       <div className="section-inner">
         <div className="section-header">
           <span className="section-num">04</span>
           <h2 className="section-title">Things I've built</h2>
         </div>
 
-        {ROWS.map((row, r) => (
-          <Fragment key={r}>
-            {/* Preview sits above the row containing the hovered card */}
-            {activeRow === r && <FeaturedPreview {...previewProps} />}
-            <div className={`projects-grid${activeRow === r ? ' projects-grid--below-preview' : ''}`}>
-              {row.map(p => (
-                <ProjectCard
-                  key={p.num}
-                  p={p}
-                  isActive={REAL_PROJECTS.indexOf(p) === activeIdx}
-                  onHover={() => { if (!p.muted) setActiveIdx(REAL_PROJECTS.indexOf(p)) }}
-                />
-              ))}
+        <div
+          className={`projects-showcase${touched ? ' projects-showcase--manual' : ''}${inView ? '' : ' projects-showcase--idle'}`}
+          onTouchStart={() => setTouched(true)}
+        >
+          <div className="showcase-list" ref={listRef} onKeyDown={onKeyDown}>
+            {REAL_PROJECTS.map((p, i) => (
+              <article
+                key={p.num}
+                data-project={p.num}
+                tabIndex={0}
+                className={`pcard${i === activeIdx ? ' pcard--active' : ''}`}
+                onMouseEnter={() => setActiveIdx(i)}
+                onFocus={() => setActiveIdx(i)}
+                onClick={() => setActiveIdx(i)}
+              >
+                {/* Autoplay timer: fills, then the next card becomes active */}
+                {i === activeIdx && <span className="project-progress" onAnimationEnd={() => step(1)} />}
+                <div className="pcard-title">
+                  <span className="project-num">{p.num}</span>
+                  <h3 className="pcard-name">{p.name}</h3>
+                </div>
+                <p className="pcard-desc">{p.desc}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="showcase-main">
+            <FeaturedPreview activeIdx={activeIdx} />
+            <div className="showcase-meta" key={activeProject.num}>
+              <div className="project-tags">
+                {activeProject.tags.map(tag => <span key={tag} className="project-tag">{tag}</span>)}
+              </div>
+              <div className="project-links">
+                <a href={activeProject.github} className="project-link" target="_blank" rel="noreferrer">GitHub</a>
+                {activeProject.streamlit && (
+                  <a href={activeProject.streamlit} className="project-link project-link--demo" target="_blank" rel="noreferrer">
+                    Live Demo
+                  </a>
+                )}
+              </div>
             </div>
-          </Fragment>
-        ))}
+          </div>
+        </div>
       </div>
     </section>
+    </div>
   )
 }

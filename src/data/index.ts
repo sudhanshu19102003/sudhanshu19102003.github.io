@@ -93,7 +93,6 @@ export interface ProjectItem {
   streamlit?: string
   video?: string
   images?: string[]
-  muted?: boolean
 }
 
 export const PROJECTS: ProjectItem[] = [
@@ -154,21 +153,6 @@ export const PROJECTS: ProjectItem[] = [
       'https://github.com/sudhanshu19102003/CoinMarketCap_scraper/assets/78022236/d315835e-812b-4648-9148-33084d7745ef',
       'https://github.com/sudhanshu19102003/CoinMarketCap_scraper/assets/78022236/7a5ea769-ece2-4d2c-be87-828f2471c6d1',
     ],
-  },
-  {
-    num: '007',
-    name: 'Business Analytics Assistant',
-    desc: 'A system combining advanced data visualization techniques with SQL databases — demonstrating how LLMs can turn raw data queries into visual, interpretable insights.',
-    tags: ['SQL','Data Viz','LLM'],
-    github: 'https://github.com/sudhanshu19102003/Business_Analytics_Assistant',
-  },
-  {
-    num: 'More',
-    name: 'Always building',
-    desc: "Every project here started with a question I couldn't find a good answer to. The next one will too.",
-    tags: [],
-    github: 'https://github.com/sudhanshu19102003',
-    muted: true,
   },
 ]
 
