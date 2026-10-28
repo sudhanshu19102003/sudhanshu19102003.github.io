@@ -1759,19 +1759,6 @@ html::-webkit-scrollbar { display: none; }
   .page-scrollbar { right: 3px; width: 10px; }
 }
 
-.exp-badge {
-  display: inline-block;
-  margin-left: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  vertical-align: middle;
-  font-family: var(--font-mono);
-  font-size: var(--font-size-2xs);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  background: var(--color-accent-2);
-  color: var(--color-ink);
-}
-
 /* Role progression within one company */
 .exp-roles {
   list-style: none;

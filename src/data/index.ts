@@ -54,7 +54,6 @@ export interface ExperienceItem {
   period: string
   company: string
   role: string
-  badge?: string
   roles?: { title: string; period: string }[]
   points: string[]
 }
@@ -64,13 +63,12 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: 'Jun 2025 — Present',
     company: 'jurisphere.ai',
     role: 'Software Engineer',
-    badge: 'Promoted',
     roles: [
       { title: 'Software Engineer', period: 'Mar 2026 — Present' },
       { title: 'Associate Software Engineer', period: 'Jun 2025 — Mar 2026' },
     ],
     points: [
-      'Shipped 290+ pull requests across frontend, backend, AI, integrations, and infrastructure, driving rapid product development.',
+      'Launched 3 touchless products and an enterprise offering, shipping 290+ pull requests across frontend, backend, AI, integrations, and infrastructure.',
       'Improved AI-powered workflows, raising output quality and supporting more complex user interactions.',
       'Built scalable data ingestion pipelines with intelligent automation, improving resilience against external system limitations.',
       'Developed internal tools for usage tracking, reporting, and analytics, giving visibility into product usage and business metrics.',
