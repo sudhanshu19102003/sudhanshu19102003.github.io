@@ -1,12 +1,15 @@
-import { useState, useEffect, useRef } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import { PROJECTS, ProjectItem } from '../data'
 
 const COLS = 3
 const REAL_PROJECTS = PROJECTS.filter(p => !p.muted)
 const MUTED_PROJECT = PROJECTS.find(p => p.muted)!
 
-const ROW1 = REAL_PROJECTS.slice(0, COLS)                        // Steam, Book, X-Ray
-const ROW2 = [...REAL_PROJECTS.slice(COLS), MUTED_PROJECT]       // ShopSense, Crypto, BizAnalytics, Muted
+// Rows of COLS cards; the muted "More" card closes the last row
+const ALL_CARDS = [...REAL_PROJECTS, MUTED_PROJECT]
+const ROWS = Array.from({ length: Math.ceil(ALL_CARDS.length / COLS) }, (_, r) =>
+  ALL_CARDS.slice(r * COLS, (r + 1) * COLS)
+)
 
 function ProjectMediaItem({ project, isActive }: { project: ProjectItem; isActive: boolean }) {
   const [slide, setSlide] = useState(0)
@@ -194,7 +197,7 @@ function ProjectCard({
 export default function Projects() {
   const [activeIdx, setActiveIdx] = useState(0)
   const activeProject = REAL_PROJECTS[activeIdx] ?? REAL_PROJECTS[0]
-  const activeRow = activeIdx < COLS ? 0 : 1
+  const activeRow = Math.floor(activeIdx / COLS)
 
   const previewProps = { activeIdx, activeProject }
 
@@ -206,35 +209,22 @@ export default function Projects() {
           <h2 className="section-title">Things I've built</h2>
         </div>
 
-        {/* Preview above row 1 when hovering row 1 cards */}
-        {activeRow === 0 && <FeaturedPreview {...previewProps} />}
-
-        {/* Grid row 1 */}
-        <div className={`projects-grid${activeRow === 0 ? ' projects-grid--below-preview' : ''}`}>
-          {ROW1.map(p => (
-            <ProjectCard
-              key={p.num}
-              p={p}
-              isActive={REAL_PROJECTS.indexOf(p) === activeIdx}
-              onHover={() => setActiveIdx(REAL_PROJECTS.indexOf(p))}
-            />
-          ))}
-        </div>
-
-        {/* Preview between rows when hovering row 2 cards */}
-        {activeRow === 1 && <FeaturedPreview {...previewProps} />}
-
-        {/* Grid row 2 */}
-        <div className={`projects-grid${activeRow === 1 ? ' projects-grid--below-preview' : ''}`}>
-          {ROW2.map(p => (
-            <ProjectCard
-              key={p.num}
-              p={p}
-              isActive={REAL_PROJECTS.indexOf(p) === activeIdx}
-              onHover={() => { if (!p.muted) setActiveIdx(REAL_PROJECTS.indexOf(p)) }}
-            />
-          ))}
-        </div>
+        {ROWS.map((row, r) => (
+          <Fragment key={r}>
+            {/* Preview sits above the row containing the hovered card */}
+            {activeRow === r && <FeaturedPreview {...previewProps} />}
+            <div className={`projects-grid${activeRow === r ? ' projects-grid--below-preview' : ''}`}>
+              {row.map(p => (
+                <ProjectCard
+                  key={p.num}
+                  p={p}
+                  isActive={REAL_PROJECTS.indexOf(p) === activeIdx}
+                  onHover={() => { if (!p.muted) setActiveIdx(REAL_PROJECTS.indexOf(p)) }}
+                />
+              ))}
+            </div>
+          </Fragment>
+        ))}
       </div>
     </section>
   )

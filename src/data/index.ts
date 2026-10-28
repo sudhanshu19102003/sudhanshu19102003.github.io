@@ -99,6 +99,15 @@ export interface ProjectItem {
 export const PROJECTS: ProjectItem[] = [
   {
     num: '001',
+    name: 'Chess TUI',
+    desc: 'Peer-to-peer chess in the terminal, written in Rust. Both programs verify every move themselves with signed, hash-chained messages over an encrypted channel, so the server never sees the game. Pixel-art pieces, chess clocks, and a Stockfish opponent.',
+    tags: ['Rust','P2P','Noise / SPAKE2','TUI'],
+    github: 'https://github.com/sudhanshu19102003/chess',
+    streamlit: 'https://chess.thesudhanshu.dev/',
+    images: ['/chess-screenshot.png'],
+  },
+  {
+    num: '002',
     name: 'Steam Recommendations',
     desc: 'A game recommendation system combining Collaborative Filtering (SVD) and Content-Based Filtering (FAISS) to suggest Steam games. Pulls live game details and artwork from the Steam API.',
     tags: ['SVD','FAISS','Steam API','Streamlit'],
@@ -107,7 +116,7 @@ export const PROJECTS: ProjectItem[] = [
     video: 'https://github.com/user-attachments/assets/840a95d9-32c3-4e27-9cfb-c59d7ac935dc',
   },
   {
-    num: '002',
+    num: '003',
     name: 'Book Assistant',
     desc: 'An LLM-powered agent that retrieves book information via tools and delivers structured responses. Built with a LangChain state graph for dynamic data flow and ChromaDB for efficient semantic search.',
     tags: ['LangChain','Claude API','ChromaDB','Agents'],
@@ -116,7 +125,7 @@ export const PROJECTS: ProjectItem[] = [
     video: 'https://github.com/sudhanshu19102003/LLM_agent_books/assets/78022236/a001d579-1c09-4830-964b-e719b200782e',
   },
   {
-    num: '003',
+    num: '004',
     name: 'X-Ray Anomaly Detector',
     desc: 'Trained InceptionNet on the MURA dataset for musculoskeletal X-ray abnormality classification. Deployed via Streamlit for accessible stakeholder use — with a live demo.',
     tags: ['InceptionNet','PyTorch','Streamlit','Computer Vision'],
@@ -128,7 +137,7 @@ export const PROJECTS: ProjectItem[] = [
     ],
   },
   {
-    num: '004',
+    num: '005',
     name: 'ShopSense',
     desc: 'A Chrome extension that scans e-commerce pages to detect fraudulent reviews and surfaces an AI-powered product chatbot — powered by Flask and Llama on the backend.',
     tags: ['Chrome Extension','Flask','LLM','NLP'],
@@ -136,7 +145,7 @@ export const PROJECTS: ProjectItem[] = [
     video: 'https://github.com/sudhanshu19102003/ShopSense/assets/78022236/a9e6c507-26a2-4fcb-80c3-471ab9bc6481',
   },
   {
-    num: '005',
+    num: '006',
     name: 'Crypto Scraping API',
     desc: 'A Django REST Framework API that scrapes live cryptocurrency data from multiple sources in parallel, using Celery for async task management and real-time progress tracking.',
     tags: ['Django','Celery','Redis','Web Scraping'],
@@ -147,7 +156,7 @@ export const PROJECTS: ProjectItem[] = [
     ],
   },
   {
-    num: '006',
+    num: '007',
     name: 'Business Analytics Assistant',
     desc: 'A system combining advanced data visualization techniques with SQL databases — demonstrating how LLMs can turn raw data queries into visual, interpretable insights.',
     tags: ['SQL','Data Viz','LLM'],
@@ -215,3 +224,18 @@ export const CERTS: CertItem[] = [
   },
 ]
 
+
+export const CHESS_LAUNCH = {
+  storageKey: 'chess-launch-v1',
+  name: 'Chess TUI',
+  tagline: 'Just launched',
+  desc: 'Chess in your terminal, peer to peer, written in Rust. Play a friend online, offline at one keyboard, or against Stockfish.',
+  screenshot: '/chess-screenshot.png',
+  site: 'https://chess.thesudhanshu.dev/',
+  github: 'https://github.com/sudhanshu19102003/chess',
+  install: {
+    unix: 'curl -fsSL https://chess.thesudhanshu.dev/install.sh | sh',
+    windows: 'irm https://chess.thesudhanshu.dev/install.ps1 | iex',
+  },
+  run: 'chess-tui',
+}
