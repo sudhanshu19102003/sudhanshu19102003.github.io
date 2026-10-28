@@ -9,14 +9,27 @@ export default function Experience() {
           <h2 className="section-title">Experience</h2>
         </div>
         <div className="experience-list">
-          {EXPERIENCE.map(({ period, company, role, points }) => (
-            <div key={company} className="exp-item">
+          {EXPERIENCE.map(({ period, company, role, badge, roles, points }) => (
+            <div key={`${company}-${period}`} className="exp-item">
               <div className="exp-meta">
                 <div className="exp-period">{period}</div>
                 <div className="exp-company">{company}</div>
               </div>
               <div className="exp-content">
-                <h3 className="exp-role">{role}</h3>
+                <h3 className="exp-role">
+                  {role}
+                  {badge && <span className="exp-badge">{badge}</span>}
+                </h3>
+                {roles && (
+                  <ol className="exp-roles">
+                    {roles.map(r => (
+                      <li key={r.title}>
+                        <span className="exp-roles-title">{r.title}</span>
+                        <span className="exp-roles-period">{r.period}</span>
+                      </li>
+                    ))}
+                  </ol>
+                )}
                 <ul className="exp-points">
                   {points.map((pt, i) => (
                     <li key={i}>{pt}</li>

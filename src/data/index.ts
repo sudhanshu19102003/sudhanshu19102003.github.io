@@ -54,6 +54,8 @@ export interface ExperienceItem {
   period: string
   company: string
   role: string
+  badge?: string
+  roles?: { title: string; period: string }[]
   points: string[]
 }
 
@@ -61,13 +63,18 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     period: 'Jun 2025 — Present',
     company: 'jurisphere.ai',
-    role: 'Software Developer',
+    role: 'Software Engineer',
+    badge: 'Promoted',
+    roles: [
+      { title: 'Software Engineer', period: 'Mar 2026 — Present' },
+      { title: 'Associate Software Engineer', period: 'Jun 2025 — Mar 2026' },
+    ],
     points: [
-      'Built AI-powered admin dashboards for automated data visualization and exploration.',
-      'Overhauled backend by replacing legacy APIs with secure, high-performance ORM-based services.',
-      'Implemented CI/CD pipelines, deployment workflows, and environment configurations for production.',
-      'Integrated low-latency, streaming Google Text-to-Speech for assistant responses.',
-      'Developed responsive, region-aware UIs with improved authentication and accessibility.',
+      'Shipped 290+ pull requests across frontend, backend, AI, integrations, and infrastructure, driving rapid product development.',
+      'Improved AI-powered workflows, raising output quality and supporting more complex user interactions.',
+      'Built scalable data ingestion pipelines with intelligent automation, improving resilience against external system limitations.',
+      'Developed internal tools for usage tracking, reporting, and analytics, giving visibility into product usage and business metrics.',
+      'Implemented privacy and compliance features across the stack to meet evolving regulatory and customer requirements.',
     ],
   },
   {
