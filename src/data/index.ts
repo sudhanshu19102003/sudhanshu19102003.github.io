@@ -3,7 +3,6 @@ export const NAV_LINKS = [
   { label: 'Experience', href: '#experience' },
   { label: 'Research',   href: '#research' },
   { label: 'Projects',   href: '#projects' },
-  { label: 'Contact',    href: '#contact' },
 ]
 
 export const HERO = {
